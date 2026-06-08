@@ -6,4 +6,11 @@ filename: "{{.InterfaceName}}.go"
 packages:
   entaintest/internal/service:
     interfaces:
-      WalletRepo:
+      Tx:
+      BalanceRepository:
+      TransactionRepository:
+      UserRepository:
+  entaintest/internal/controller:
+    interfaces:
+      TransactionService:
+      BalanceService:

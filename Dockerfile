@@ -7,8 +7,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/server ./cmd/server
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/migrate ./cmd/migrate
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+RUN go build -o /app/entaintest ./cmd
 
 # ---- runtime stage ----
 FROM alpine:3.20
@@ -16,8 +17,7 @@ FROM alpine:3.20
 RUN addgroup -S app && adduser -S app -G app
 USER app
 
-COPY --from=build /app/server /server
-COPY --from=build /app/migrate /migrate
+COPY --from=build /app/entaintest /entaintest
 
 EXPOSE 8080
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/entaintest"]

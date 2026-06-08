@@ -10,6 +10,9 @@ func (e Error) Error() string {
 const (
 	ErrUserNotFound         Error = "user not found"
 	ErrInsufficientFunds    Error = "insufficient funds"
-	ErrDuplicateTransaction Error = "duplicate transaction"
-	ErrInvalidInput         Error = "invalid input"
+	ErrDuplicateTransaction Error = "transaction already processed"
+	ErrInvalidState         Error = "invalid state"
+	ErrInvalidSourceType    Error = "invalid source type"
+	ErrInvalidAmount        Error = "invalid amount"
+	ErrMissingTransactionID Error = "missing transactionId"
 )

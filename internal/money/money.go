@@ -4,6 +4,7 @@ package money
 
 import (
 	"errors"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -51,7 +52,7 @@ func Parse(s string) (int64, error) {
 		}
 	}
 
-	if whole > (1<<62)/100 {
+	if whole > math.MaxInt64/100 {
 		return 0, ErrInvalidAmount
 	}
 

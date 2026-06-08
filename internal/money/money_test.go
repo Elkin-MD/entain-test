@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_Parse_ReturnsCents_WhenAmountIsValid(t *testing.T) {
+func Test_Parse_ReturnsCents_InCaseAmountIsValid(t *testing.T) {
 	tests := []struct {
 		name string
 		in   string
@@ -35,7 +35,7 @@ func Test_Parse_ReturnsCents_WhenAmountIsValid(t *testing.T) {
 	}
 }
 
-func Test_Parse_ReturnsError_WhenAmountIsInvalid(t *testing.T) {
+func Test_Parse_ReturnsError_InCaseAmountIsInvalid(t *testing.T) {
 	tests := []struct {
 		name string
 		in   string
@@ -62,7 +62,7 @@ func Test_Parse_ReturnsError_WhenAmountIsInvalid(t *testing.T) {
 	}
 }
 
-func Test_Format_ReturnsDecimalString_WhenGivenCents(t *testing.T) {
+func Test_Format_ReturnsDecimalString_InCaseGivenCents(t *testing.T) {
 	tests := []struct {
 		name string
 		in   int64
@@ -87,7 +87,7 @@ func Test_Format_ReturnsDecimalString_WhenGivenCents(t *testing.T) {
 	}
 }
 
-func Test_Format_ReturnsOriginalString_WhenAppliedAfterParse(t *testing.T) {
+func Test_Format_ReturnsOriginalString_InCaseAppliedAfterParse(t *testing.T) {
 	inputs := []string{"0.00", "9.25", "10.15", "1234.56"}
 
 	for _, input := range inputs {
