@@ -52,6 +52,7 @@ func (s *TransactionControllerSuite) Test_CreateTransaction_ReturnsResponse_InCa
 		Amount:        "10.15",
 		TransactionID: "tx-1",
 	}
+
 	s.transactionService.EXPECT().
 		ProcessTransaction(mock.Anything, expectedRequest).
 		Return(&serviceresponse.ProcessTransactionResponse{

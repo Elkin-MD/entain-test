@@ -23,13 +23,15 @@ func (c *Controller) CreateTransaction(_ http.ResponseWriter, r *http.Request) (
 		return nil, err
 	}
 
-	var request controllerrequest.CreateTransactionRequest
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+	var body controllerrequest.CreateTransactionRequest
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		return nil, ErrInvalidBody
 	}
 
-	request.UserID = userID
-	request.SourceType = r.Header.Get("Source-Type")
+	request, err := controllerrequest.NewCreateTransactionRequest(userID, r.Header.Get("Source-Type"), body.State, body.Amount, body.TransactionID)
+	if err != nil {
+		return nil, err
+	}
 
 	response, err := c.transactionService.ProcessTransaction(r.Context(), request.ToServiceRequest())
 	if err != nil {

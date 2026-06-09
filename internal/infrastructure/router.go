@@ -7,13 +7,23 @@ import (
 	"entaintest/internal/infrastructure/middleware"
 )
 
+// Per-user request limits: a generous ceiling that lets the required 20-30 RPS
+// through while rejecting unreasonable bursts.
+const (
+	rateBurst           = 60
+	rateRefillPerSecond = 60
+)
+
 // NewRouter builds the application HTTP handler with all routes and middleware.
 func NewRouter(c *controller.Controller) http.Handler {
 	mux := http.NewServeMux()
 
+	limiter := middleware.NewRateLimiter(rateBurst, rateRefillPerSecond)
+	rateLimit := middleware.RateLimit(limiter)
+
 	// POST is used to create a transaction; PUT would be more conventional for an upsert.
-	mux.Handle("POST /user/{userId}/transaction", middleware.RequireSourceType(handle(c.CreateTransaction)))
-	mux.Handle("GET /user/{userId}/balance", handle(c.GetBalance))
+	mux.Handle("POST /user/{userId}/transaction", rateLimit(middleware.RequireSourceType(handle(c.CreateTransaction))))
+	mux.Handle("GET /user/{userId}/balance", rateLimit(handle(c.GetBalance)))
 	mux.HandleFunc("GET /health", health)
 
 	return middleware.Recover(middleware.Logging(mux))

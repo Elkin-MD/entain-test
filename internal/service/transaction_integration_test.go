@@ -133,6 +133,7 @@ func (s *TransactionIntegrationSuite) Test_ProcessTransaction_ReturnsStartingBal
 		go apply(i, "win")
 		go apply(i, "lose")
 	}
+
 	wg.Wait()
 	close(errCh)
 
@@ -140,6 +141,7 @@ func (s *TransactionIntegrationSuite) Test_ProcessTransaction_ReturnsStartingBal
 	for err := range errCh {
 		s.Require().NoError(err)
 	}
+
 	s.Require().Equal(start, s.balanceOf(userID))
 }
 
@@ -175,6 +177,7 @@ func (s *TransactionIntegrationSuite) Test_ProcessTransaction_AppliesOnce_InCase
 		wg.Add(1)
 		go apply()
 	}
+
 	wg.Wait()
 
 	// Assert

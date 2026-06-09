@@ -64,6 +64,7 @@ func (s *TransactionServiceSuite) Test_ProcessTransaction_ReturnsResponse_InCase
 		SourceType:    enum.SourceGame,
 		Amount:        1015,
 	}
+
 	s.expectTransaction()
 	s.balances.EXPECT().LockBalance(mock.Anything, uint64(1)).Return(int64(500), nil).Once()
 	s.transactions.EXPECT().Insert(mock.Anything, expectedTransaction).Return(nil).Once()
@@ -92,6 +93,7 @@ func (s *TransactionServiceSuite) Test_ProcessTransaction_ReturnsInsufficientFun
 		SourceType:    enum.SourceGame,
 		Amount:        1000,
 	}
+
 	s.expectTransaction()
 	s.balances.EXPECT().LockBalance(mock.Anything, uint64(1)).Return(int64(500), nil).Once()
 	s.transactions.EXPECT().Insert(mock.Anything, expectedTransaction).Return(nil).Once()
