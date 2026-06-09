@@ -1,0 +1,16 @@
+with-expecter: true
+dir: "{{.InterfaceDir}}/mocks"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "mocks"
+filename: "{{.InterfaceName}}.go"
+packages:
+  entaintest/internal/service:
+    interfaces:
+      Tx:
+      BalanceRepository:
+      TransactionRepository:
+      UserRepository:
+  entaintest/internal/controller:
+    interfaces:
+      TransactionService:
+      BalanceService:
